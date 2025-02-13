@@ -9,9 +9,28 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
+    "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-separator": "^1.1.2",
+    "@radix-ui/react-slot": "^1.1.2",
+    "@radix-ui/react-tooltip": "^1.1.8",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "firebase": "^11.3.0",
+    "lucide-react": "^0.475.0",
+    "next": "15.1.6",
     "react": "^19.0.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^19.0.0",
-    "next": "15.1.6"
+    "react-hook-form": "^7.54.2",
+    "react-rnd": "^10.4.14",
+    "shadcn": "^2.3.0",
+    "tailwind-merge": "^3.0.1",
+    "tailwindcss-animate": "^1.0.7",
+    "uuid": "^11.0.5",
+    "zod": "^3.24.1",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "postcss": "^8",
