@@ -15,49 +15,46 @@ const formSchema = z.object({
     name: z.string().min(5, 'Project Name must be at least 5 characters'),
     description: z.string().min(10, 'Description must be at least 10 characters'),
     startDate: z.string().optional(),
-    endDate: z.string().optional()
+    endDate: z.string().optional(),
 })
 
 export default function CreateProject() {
-    const router = useRouter(); // ✅ Moved router above onSubmit
-
+    const router = useRouter();
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
         resolver: zodResolver(formSchema)
     });
 
+    const user = auth.currentUser;
+    console.log(auth.currentUser)
+   
     const onSubmit = async (data) => {
         try {
-            console.log("Project Data:", data);
-
-            // 🔹 Ensure user is authenticated
-            const user = auth.currentUser;
             if (!user) {
                 alert("You must be logged in to create a project.");
                 return;
             }
 
-            // 🔹 Get Firebase Auth Token
+            // Get Firebase Auth Token
             const token = await user.getIdToken();
 
-            // 🔹 Generate UUID
+            // Generate UUID for project
             const projectId = uuidv4();
-            const projectData = { ...data, id: projectId };
+            const projectData = { ...data, projectId, adminId: user.uid }; // Include projectId and userId
 
-            // 🔹 Send Request with Token
+            // Send request with token
             const res = await fetch("/api/projects", {
                 method: "POST",
                 body: JSON.stringify(projectData),
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`  // 🔥 Send Auth Token
+                    "Authorization": `Bearer ${token}`
                 },
             });
-            console.log(res)
 
             if (!res.ok) throw new Error("Failed to create project");
 
             alert("Project Created Successfully!");
-            router.push(`/admin/projects/WebBuilder/${projectId}`);  // ✅ Redirect after creation
+            router.push(`/admin/projects/WebBuilder/${projectId}?userId=${user.uid}`);
         } catch (error) {
             console.error("Error creating project:", error);
         }

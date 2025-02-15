@@ -1,4 +1,9 @@
-export default function TextProperties({ selectedElement, updateElement }) {
+export default function TextProperties({ selectedElement, updateElement, updateLiveElement }) {
+  const handleUpdate = (updates) => {
+    updateElement(selectedElement.id, updates);
+    updateLiveElement(selectedElement.id, updates); // Liveblocks update
+  };
+
   return (
     <div>
       <h3 className="text-lg font-bold mb-2">Customize Text</h3>
@@ -8,7 +13,7 @@ export default function TextProperties({ selectedElement, updateElement }) {
         type="text"
         className="border p-1 w-full"
         value={selectedElement.text || ""}
-        onChange={(e) => updateElement(selectedElement.id,{ text: e.target.value })}
+        onChange={(e) => handleUpdate({ text: e.target.value })}
       />
 
       <label className="block mt-4">Horizontal Position (X):</label>
@@ -16,7 +21,7 @@ export default function TextProperties({ selectedElement, updateElement }) {
         type="number"
         className="border p-1 w-full"
         value={selectedElement.x || 0}
-        onChange={(e) => updateElement(selectedElement.id,{ x: Number(e.target.value) })}
+        onChange={(e) => handleUpdate({ x: Number(e.target.value) })}
       />
 
       <label className="block mt-4">Vertical Position (Y):</label>
@@ -24,7 +29,7 @@ export default function TextProperties({ selectedElement, updateElement }) {
         type="number"
         className="border p-1 w-full"
         value={selectedElement.y || 0}
-        onChange={(e) => updateElement(selectedElement.id,{ y: Number(e.target.value) })}
+        onChange={(e) => handleUpdate({ y: Number(e.target.value) })}
       />
 
       <label className="block mt-2">Font Size:</label>
@@ -32,14 +37,14 @@ export default function TextProperties({ selectedElement, updateElement }) {
         type="number"
         className="border p-1 w-full"
         value={selectedElement.fontSize || 16}
-        onChange={(e) => updateElement(selectedElement.id,{ fontSize: Number(e.target.value) })}
+        onChange={(e) => handleUpdate({ fontSize: Number(e.target.value) })}
       />
 
       <label className="block mt-2">Font Weight:</label>
       <select
         className="border p-1 w-full"
         value={selectedElement.fontWeight || "normal"}
-        onChange={(e) => updateElement(selectedElement.id,{ fontWeight: e.target.value })}
+        onChange={(e) => handleUpdate({ fontWeight: e.target.value })}
       >
         <option value="normal">Normal</option>
         <option value="bold">Bold</option>
@@ -60,7 +65,7 @@ export default function TextProperties({ selectedElement, updateElement }) {
       <select
         className="border p-1 w-full"
         value={selectedElement.fontStyle || "normal"}
-        onChange={(e) => updateElement(selectedElement.id,{ fontStyle: e.target.value })}
+        onChange={(e) => handleUpdate({ fontStyle: e.target.value })}
       >
         <option value="normal">Normal</option>
         <option value="italic">Italic</option>
@@ -72,7 +77,7 @@ export default function TextProperties({ selectedElement, updateElement }) {
         type="color"
         className="w-full"
         value={selectedElement.color || "#000000"}
-        onChange={(e) => updateElement(selectedElement.id,{ color: e.target.value })}
+        onChange={(e) => handleUpdate({ color: e.target.value })}
       />
 
       <label className="block mt-2">Background Color:</label>
@@ -80,47 +85,19 @@ export default function TextProperties({ selectedElement, updateElement }) {
         type="color"
         className="w-full"
         value={selectedElement.backgroundColor || "#ffffff"}
-        onChange={(e) => updateElement(selectedElement.id,{ backgroundColor: e.target.value })}
+        onChange={(e) => handleUpdate({ backgroundColor: e.target.value })}
       />
 
       <label className="block mt-2">Text Align:</label>
       <select
         className="border p-1 w-full"
         value={selectedElement.textAlign || "left"}
-        onChange={(e) => updateElement(selectedElement.id,{ textAlign: e.target.value })}
+        onChange={(e) => handleUpdate({ textAlign: e.target.value })}
       >
         <option value="left">Left</option>
         <option value="center">Center</option>
         <option value="right">Right</option>
         <option value="justify">Justify</option>
-      </select>
-
-      <label className="block mt-2">Letter Spacing (px):</label>
-      <input
-        type="number"
-        className="border p-1 w-full"
-        value={selectedElement.letterSpacing || 0}
-        onChange={(e) => updateElement(selectedElement.id,{ letterSpacing: Number(e.target.value) })}
-      />
-
-      <label className="block mt-2">Line Height:</label>
-      <input
-        type="number"
-        className="border p-1 w-full"
-        value={selectedElement.lineHeight || 1.5}
-        onChange={(e) => updateElement(selectedElement.id,{ lineHeight: Number(e.target.value) })}
-      />
-
-      <label className="block mt-2">Text Decoration:</label>
-      <select
-        className="border p-1 w-full"
-        value={selectedElement.textDecoration || "none"}
-        onChange={(e) => updateElement(selectedElement.id,{ textDecoration: e.target.value })}
-      >
-        <option value="none">None</option>
-        <option value="underline">Underline</option>
-        <option value="overline">Overline</option>
-        <option value="line-through">Line-through</option>
       </select>
     </div>
   );

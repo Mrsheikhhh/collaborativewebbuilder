@@ -1,72 +1,28 @@
 import React, { useState } from "react";
 
-export default function ImageProperties({ selectedElement, updateElement }) {
-  const [imageSrc, setImageSrc] = useState(selectedElement.src);
-  const [imageWidth, setImageWidth] = useState(selectedElement.width);
-  const [imageHeight, setImageHeight] = useState(selectedElement.height);
-  const [borderColor, setBorderColor] = useState(selectedElement.borderColor || "#000000");
-  const [borderWidth, setBorderWidth] = useState(selectedElement.borderWidth || "1px");
-  const [borderRadius, setBorderRadius] = useState(selectedElement.borderRadius || "0px");
-  const [boxShadow, setBoxShadow] = useState(selectedElement.boxShadow || "none");
-  const [opacity, setOpacity] = useState(selectedElement.opacity || 1);
-  const [filter, setFilter] = useState(selectedElement.filter || "none");
-  const [objectFit, setObjectFit] = useState(selectedElement.objectFit || "cover");
-  const [transform, setTransform] = useState(selectedElement.transform || "rotate(0deg)");
+export default function ImageProperties({ selectedElement, updateElement,updateLiveElement }) {
+  const [imageProperties, setImageProperties] = useState({
+    src: selectedElement.src,
+    width: selectedElement.width,
+    height: selectedElement.height,
+    borderColor: selectedElement.borderColor || "#000000",
+    borderWidth: selectedElement.borderWidth || "1px",
+    borderRadius: selectedElement.borderRadius || "0px",
+    boxShadow: selectedElement.boxShadow || "none",
+    opacity: selectedElement.opacity || 1,
+    filter: selectedElement.filter || "none",
+    objectFit: selectedElement.objectFit || "cover",
+    transform: selectedElement.transform || "rotate(0deg)",
+  });
 
-  const handleSrcChange = (e) => {
-    setImageSrc(e.target.value);
-    updateElement(selectedElement.id,{ src: e.target.value });
-    console.log(selectedElement,'updated')
-  };
-
-  const handleWidthChange = (e) => {
-    setImageWidth(e.target.value);
-    updateElement(selectedElement.id,{ width: e.target.value });
-  };
-
-  const handleHeightChange = (e) => {
-    setImageHeight(e.target.value);
-    updateElement(selectedElement.id,{ height: e.target.value });
-  };
-
-  const handleBorderColorChange = (e) => {
-    setBorderColor(e.target.value);
-    updateElement(selectedElement.id,{ borderColor: e.target.value });
-  };
-
-  const handleBorderWidthChange = (e) => {
-    setBorderWidth(e.target.value);
-    updateElement(selectedElement.id,{ borderWidth: e.target.value });
-  };
-
-  const handleBorderRadiusChange = (e) => {
-    setBorderRadius(e.target.value);
-    updateElement(selectedElement.id, { borderRadius: e.target.value });
-  };
-
-  const handleBoxShadowChange = (e) => {
-    setBoxShadow(e.target.value);
-    updateElement(selectedElement.id,{ boxShadow: e.target.value });
-  };
-
-  const handleOpacityChange = (e) => {
-    setOpacity(e.target.value);
-    updateElement( selectedElement.id,{ opacity: e.target.value });
-  };
-
-  const handleFilterChange = (e) => {
-    setFilter(e.target.value);
-    updateElement(selectedElement.id,{ filter: e.target.value });
-  };
-
-  const handleObjectFitChange = (e) => {
-    setObjectFit(e.target.value);
-    updateElement(selectedElement.id,{ objectFit: e.target.value });
-  };
-
-  const handleTransformChange = (e) => {
-    setTransform(e.target.value);
-    updateElement(selectedElement.id,{ transform: e.target.value });
+  const handleChange = (e, property) => {
+    const value = e.target.type === "range" ? parseFloat(e.target.value) : e.target.value;
+    setImageProperties((prevProps) => {
+      const updatedProperties = { ...prevProps, [property]: value };
+      updateElement(selectedElement.id, updatedProperties);
+      updateLiveElement(selectedElement.id,updatedProperties)
+      return updatedProperties;
+    });
   };
 
   return (
@@ -76,8 +32,8 @@ export default function ImageProperties({ selectedElement, updateElement }) {
         <label>Image Source:</label>
         <input
           type="text"
-          value={imageSrc}
-          onChange={handleSrcChange}
+          value={imageProperties.src}
+          onChange={(e) => handleChange(e, "src")}
           className="border p-2 w-full"
         />
       </div>
@@ -85,8 +41,8 @@ export default function ImageProperties({ selectedElement, updateElement }) {
         <label>Width:</label>
         <input
           type="text"
-          value={imageWidth}
-          onChange={handleWidthChange}
+          value={imageProperties.width}
+          onChange={(e) => handleChange(e, "width")}
           className="border p-2 w-full"
         />
       </div>
@@ -94,8 +50,8 @@ export default function ImageProperties({ selectedElement, updateElement }) {
         <label>Height:</label>
         <input
           type="text"
-          value={imageHeight}
-          onChange={handleHeightChange}
+          value={imageProperties.height}
+          onChange={(e) => handleChange(e, "height")}
           className="border p-2 w-full"
         />
       </div>
@@ -103,8 +59,8 @@ export default function ImageProperties({ selectedElement, updateElement }) {
         <label>Border Color:</label>
         <input
           type="color"
-          value={borderColor}
-          onChange={handleBorderColorChange}
+          value={imageProperties.borderColor}
+          onChange={(e) => handleChange(e, "borderColor")}
           className="border p-2 w-full"
         />
       </div>
@@ -112,8 +68,8 @@ export default function ImageProperties({ selectedElement, updateElement }) {
         <label>Border Width:</label>
         <input
           type="text"
-          value={borderWidth}
-          onChange={handleBorderWidthChange}
+          value={imageProperties.borderWidth}
+          onChange={(e) => handleChange(e, "borderWidth")}
           className="border p-2 w-full"
         />
       </div>
@@ -121,8 +77,8 @@ export default function ImageProperties({ selectedElement, updateElement }) {
         <label>Border Radius:</label>
         <input
           type="text"
-          value={borderRadius}
-          onChange={handleBorderRadiusChange}
+          value={imageProperties.borderRadius}
+          onChange={(e) => handleChange(e, "borderRadius")}
           className="border p-2 w-full"
         />
       </div>
@@ -130,8 +86,8 @@ export default function ImageProperties({ selectedElement, updateElement }) {
         <label>Box Shadow:</label>
         <input
           type="text"
-          value={boxShadow}
-          onChange={handleBoxShadowChange}
+          value={imageProperties.boxShadow}
+          onChange={(e) => handleChange(e, "boxShadow")}
           className="border p-2 w-full"
         />
       </div>
@@ -142,8 +98,8 @@ export default function ImageProperties({ selectedElement, updateElement }) {
           min="0"
           max="1"
           step="0.1"
-          value={opacity}
-          onChange={handleOpacityChange}
+          value={imageProperties.opacity}
+          onChange={(e) => handleChange(e, "opacity")}
           className="border p-2 w-full"
         />
       </div>
@@ -151,14 +107,18 @@ export default function ImageProperties({ selectedElement, updateElement }) {
         <label>Filter:</label>
         <input
           type="text"
-          value={filter}
-          onChange={handleFilterChange}
+          value={imageProperties.filter}
+          onChange={(e) => handleChange(e, "filter")}
           className="border p-2 w-full"
         />
       </div>
       <div>
         <label>Object Fit:</label>
-        <select value={objectFit} onChange={handleObjectFitChange} className="border p-2 w-full">
+        <select
+          value={imageProperties.objectFit}
+          onChange={(e) => handleChange(e, "objectFit")}
+          className="border p-2 w-full"
+        >
           <option value="cover">Cover</option>
           <option value="contain">Contain</option>
         </select>
@@ -167,8 +127,8 @@ export default function ImageProperties({ selectedElement, updateElement }) {
         <label>Transform (Rotation):</label>
         <input
           type="text"
-          value={transform}
-          onChange={handleTransformChange}
+          value={imageProperties.transform}
+          onChange={(e) => handleChange(e, "transform")}
           className="border p-2 w-full"
         />
       </div>

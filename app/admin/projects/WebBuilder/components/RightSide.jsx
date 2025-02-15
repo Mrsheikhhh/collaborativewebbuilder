@@ -64,7 +64,7 @@ export default function RightSide({ selectedElement = {}, updateElement }) {
       level: 1,
       text: "Heading Text",
       color: "#333333",
-      fontSize: "24px",
+      fontSize: "24",
       fontWeight: "bold",
       textAlign: "center",
       letterSpacing: "0.5px",

@@ -23,7 +23,7 @@ export default function GetProjects() {
             <h1 className="text-2xl font-bold mb-4">Projects List</h1>
             <ul className="space-y-2">
                 {projects.map((project) => (
-                    <li key={project.id} className="border p-4 rounded-lg shadow">
+                    <li key={project.id} className="border p-4 rounded-lg shadow" >
                         <h2 className="text-lg font-semibold">{project.name}</h2>
                         <p className="text-gray-600">{project.description}</p>
                         <p className="text-sm text-gray-500">Start: {project.startDate || 'N/A'}</p>

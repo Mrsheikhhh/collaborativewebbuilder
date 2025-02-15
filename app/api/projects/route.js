@@ -3,12 +3,14 @@ import { collection, addDoc,getDocs } from "firebase/firestore"
 import { auth } from "@/lib/firebase/firebaseConfig" // Import Firebase auth
 export async function POST(req) {
   try {
-      const { name, description, startDate, endDate } = await req.json();
+      const { name, description, startDate, endDate,projectId,adminId } = await req.json();
 
       const docRef = await addDoc(collection(db, "projects"), {
           name,
           description,
           startDate,
+          projectId,
+          adminId,
           endDate,
           createdAt: new Date().toISOString(),
       });
